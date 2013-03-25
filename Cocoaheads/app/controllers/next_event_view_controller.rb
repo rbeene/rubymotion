@@ -95,8 +95,10 @@ class NextEventViewController < UIViewController
 
 
   def buttonForSignUp
-    sign_up_button = UIButton.buttonWithType(UIButtonTypeRoundedRect)
+    sign_up_button = UIButton.buttonWithType(UIButtonTypeCustom)
     sign_up_button.frame = [[15, 350], [295, 40]]
+    sign_up_button.setBackgroundImage(UIImage.imageNamed('btnBrown'), forState: UIControlStateNormal)
+    sign_up_button.setTitle("Don't have an account, sign-up", forState:UIControlStateNormal)
     sign_up_button.setTitle("Don't have an account, sign-up", forState:UIControlStateNormal)
     sign_up_button.titleLabel.font = UIFont.fontWithName("HelveticaNeue-Light", size:18)
     sign_up_button.addTarget(self, action:'sign_up', forControlEvents:UIControlEventTouchUpInside)
