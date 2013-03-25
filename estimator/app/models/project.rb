@@ -16,7 +16,16 @@ class Project
   attr_reader :variation
   attr_reader :delivery_year
 
-  def load_historical_estimates
+  def self.get_options_for_type(type)
+    estimates = self.load_historical_estimates
+    values = NSMutableArray.alloc.init
+    estimates[type.capitalize].each do |k,v|
+      values.addObject(k)
+    end
+    values
+  end
+
+  def self.load_historical_estimates
 
     # Get the path of our JSON File inside the bundle
     historical_data_file  = NSBundle.mainBundle.pathForResource('historical_data', ofType:'json')
@@ -152,7 +161,7 @@ class Project
 
   def estimate
 
-    @historical_estimates = load_historical_estimates
+    @historical_estimates = Project.load_historical_estimates
 
 
     obtain_historical_complexity

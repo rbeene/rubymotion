@@ -113,9 +113,7 @@ class ProjectViewController < UIViewController
 
     # For the UISegmentedControl to work, we need to pass him the possible values
     # in this case a NSArray do the trick
-    @complexity_values = NSMutableArray.alloc.init
-    @complexity_values.addObject("Low")
-    @complexity_values.addObject("High")
+    @complexity_values = Project.get_options_for_type("complexity")
 
     # We create an instance of a UISegmentedControl, setting the allowed values for it
     @complexity_segmented_control = UISegmentedControl.alloc.initWithItems(@complexity_values)
@@ -138,9 +136,7 @@ class ProjectViewController < UIViewController
     self.view.addSubview(@outsourced_label)
 
 
-    @outsourced_values = NSMutableArray.alloc.init
-    @outsourced_values.addObject("No")
-    @outsourced_values.addObject("Yes")
+    @outsourced_values = Project.get_options_for_type("outsourced")
 
     @outsourced_segmented_control = UISegmentedControl.alloc.initWithItems(@outsourced_values)
     @outsourced_segmented_control.frame = CGRectMake(10, 240, 300, 30)
@@ -159,9 +155,7 @@ class ProjectViewController < UIViewController
     self.view.addSubview(@methodology_label)
 
 
-    @methodology_values = NSMutableArray.alloc.init
-    @methodology_values.addObject("Waterfall")
-    @methodology_values.addObject("Agile")
+    @methodology_values = Project.get_options_for_type("methodology")
 
     @methodology_segmented_control = UISegmentedControl.alloc.initWithItems(@methodology_values)
     @methodology_segmented_control.frame = CGRectMake(10, 320, 300, 30)
