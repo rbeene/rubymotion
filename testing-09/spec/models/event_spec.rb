@@ -18,6 +18,12 @@ describe "Event" do
     days_left_until_past_date.should.equal 0
   end
 
+  it "should count days left as 0 for current date" do
+    current_date = date_adding_days(0)
+    days_left_until_current_date = @event.days_left_until(current_date)
+    days_left_until_current_date.should.equal 0
+  end
+
   def date_adding_days(days_to_add)
     components = NSDateComponents.alloc.init
     components.day = days_to_add
