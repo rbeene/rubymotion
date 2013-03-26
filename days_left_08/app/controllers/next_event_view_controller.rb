@@ -14,8 +14,7 @@ class NextEventViewController < UIViewController
     self.view.backgroundColor = UIColor.whiteColor
   end
 
-   
-    
+ 
   def viewDidLoad    
     super
     
@@ -23,12 +22,11 @@ class NextEventViewController < UIViewController
     self.view.addSubview( imageViewWithBackground )
     self.view.addSubview( imageViewWithTitleBackground )
     @next_event_name_label = labelWithNextEventName
-    @days_left_view = viewWithDaysLeft
+    
     self.view.addSubview( @next_event_name_label )
     
     self.view.addSubview( buttonForSignIn )
-    self.view.addSubview( buttonForSignUp )
-    self.view.addSubview( @days_left_view )
+    self.view.addSubview( buttonForSignUp )    
     self.view.addSubview( buttonToChangeDaysLeft )
     
     @next_event_name_label.text = EVENT_NAME_TEXT
@@ -96,17 +94,17 @@ class NextEventViewController < UIViewController
     change_days_left_button
   end  
 
-
+  
   def viewWithDaysLeft
-    days_left_view = FlipCountView.alloc.initWithFrame( [[10, 120], [68, 74]] )    
     
-    days_left_view
   end  
+  
   
   def viewDidUnload    
     super
     @next_event_name_label = nil
     @days_left_view = nil
+
   end
 
   def shouldAutorotateToInterfaceOrientation(interfaceOrientation)
@@ -115,15 +113,11 @@ class NextEventViewController < UIViewController
   end
 
   def change_days_left
-    @days_left = @days_left + 1 
-    @days_left_view.days_left = @days_left
-    @days_left_view.setNeedsDisplay
+    
   end  
 
   def sign_up
-    @days_left = @days_left + 1 
-    @days_left_view.days_left = @days_left
-    @days_left_view.setNeedsDisplay
+
   end  
 
   def sign_in( button )
