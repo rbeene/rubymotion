@@ -1,0 +1,46 @@
+{
+"Complexity": {
+
+"Low":
+{
+"TotalEffort": 80,
+"Variation": 5
+},
+
+"High":
+{
+"TotalEffort": 400,
+"Variation": 20
+}
+},
+
+"Outsourced":
+{
+"No":
+{
+"TotalEffort": 80,
+"Variation": 5
+},
+
+"Yes":
+{
+"TotalEffort": 400,
+"Variation": 7
+}
+},
+
+"Methodology":
+{
+"Waterfall":
+{
+"TotalEffort": 400,
+"Variation": 15
+},
+
+"Agile":
+{
+"TotalEffort": 80,
+"Variation": 3
+}
+}
+}
