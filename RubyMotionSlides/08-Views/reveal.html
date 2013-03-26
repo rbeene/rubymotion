@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>UIViews</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+## UIViews
+
+![](uiviews.png "UI Views") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## CocoaHeads App
+
+![](cocoaheads.png "CocoaHeads App") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIViews
+        
+UIViews are responsible for:
+
++ Knowing how to draw themself
++ Knowing its subviews
++ Accepting interaction
+        
+</script>
+</section> 
+
+    
+<section data-markdown>
+<script type="text/template">
+
+## UIView Hierarchy
+
+![](hierarchy.png "UI Views") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Creating UIViews
+
+You can create them from InterfaceBuilder or:
+
+    myView = UIView.alloc.initWithFrame(CGRectMake(0,0,30,30))
+    window.addSubview(myView)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Frames & Bounds
+
+![](frames&bounds.png "Frames & Bounds") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIView's Drawing Cycle
+
+![](drawingcycle.png "UIView Drawing") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIView's Drawing
+
+For drawing you use Core Graphics. It is a 2D C API Library.
+
+    # Subclassing UIView
+    class MyView < UIView
+
+      def drawRect(rect)
+        ctx = UIGraphicsGetCurrentContext()
+        bounds = self.bounds
+        
+        CGContextMoveToPoint(ctx, bounds.origin.x, bounds.origin.y)
+        CGContextAddLineToPoint(ctx, bounds.size.width, bounds.size.height)
+        CGContextStrokePath(ctx)      
+      end
+
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Important UIView methods
+
+    class UIView
+      # Hierarchy 
+      window
+      superview
+      subviews
+      
+      # Location of view
+      bounds
+      frame
+      
+      # Telling a view it is 'dirty'
+      setNeedsDisplay
+      setNeedsDisplayInRect(invalidRect)
+      
+      # Display properties
+      setBackgroundColor(uiColor)
+      setHidden(true/false)
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIScrollView
+The UIScrollView provides support for displaying content that is larger than the size of the application’s window. It enables users to use swipe gestures, and to zoom in and back from portions of the content by making pinching gestures.
+    
+    scrollView = UIScrollView.alloc.initWithFrame(screenSize)
+    hugeView = MyView.alloc.initWithFrame(CGRectMake(0, 0, 1024, 1024))
+
+    scrollView.setContentSize(CGSizeMake(1024, 1024))
+    scrollView.addSubview(hugeView)
+
+    window.addSubview(scrollView)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIScrollView
+
+![](svhierarchy.png "UIScrollView") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Clipping with UIScrollView
+
+![](svwindow.png "") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIViews
+
+![](uiviews.png "UI Views") 
+
+[Chapters](../reveal.html) | 
+[Testing](../09-Testing/reveal.html)
+
+</script>
+</section> 
+
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

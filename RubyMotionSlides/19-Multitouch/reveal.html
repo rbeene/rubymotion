@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Multitouch</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+## Multitouch
+
+![](multitouch.png "Multitouch") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Touches
+Handling touches and performing some action based on theim.
+
+![](running.png "Multitouch")
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UIResponder
+
+UIViews are also UIResponders
+
+    touchesBegan(touches, withEvent:event)
+
+    touchesMoved(touches, withEvent:event)
+
+    touchesEnded(touches, withEvent:event)
+
+    touchesCancelled(touches, withEvent:event)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UITouch and NSSet
+IOS uses NSSets to represent group of touches. They are unordered.
+
+    def touchesBegan(touches, withEvent:event)
+        aTouch = touches.anyObject
+        touches do |touch|
+            # process the touches.
+        end
+    end
+
+UITouch has all information for one finger
+
+    tapCount
+
+    locationInView(view)
+
+    previousLocationInView(view)
+
+    timeStamp
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Using UITouch
+One touch object recycled for lifetime of a touch
+
+    # Delegate method
+    def touchesBegan(touches, withEvent:event)
+
+        touches.do |touch|
+            key = NSValue.valueWithPointer(touch)
+            startLocation = touch.locationInView(self)
+        
+            v = NSValue.valueWithCGPoint(startLocation)
+        
+            touchDict.setObject(v, forKey:key)
+        end
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Using UITouch
+Processing touches
+
+    # Delegate method
+    def touchesEnded(touches, withEvent:event)
+
+        touches.do |touch|
+            key = NSValue.valueWithPointer(t)
+            endLocation = t.locationInView(self)
+            startLocation = touchDict.objectForKey(key).CGPointValue)
+        
+            delta = CGPointMake(endLocation.x - startLocation.x, endLocation.y - startLocation.y)
+
+            touchDict.removeObjectForKey(key)
+        end
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Gesture Recognizers
+
+    UITapGestureRecognizer
+
+    UILongPressGestureRecognizer
+
+    UIPanGestureRecognizer
+
+    UIPinchGestureRecognizer
+
+    UISwipeGestureRecognizer
+
+    UIRotationGestureRecognizer
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Attached to a View
+
+    gr = UITapGestureRecognizer.alloc.initWithTarget(self, action: :'tap:')
+
+    view.addGestureRecognizer(gr)
+    
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Action method
+    
+    def tap(aUITapGestureRecognizer)
+
+        state = aUITapGestureRecognizer.state
+        
+        if (state == UIGestureRecognizerStateBegan)
+        elsif (state == UIGestureRecognizerStateChanged)
+        elsif (state == UIGestureRecognizerStateEnded)
+        elsif (state == UIGestureRecognizerStateRecognized)
+        elsif (state == UIGestureRecognizerStateCancelled)
+        end
+    end
+    
+</script>
+</section> 
+
+    
+<section data-markdown>
+<script type="text/template">
+
+## Multitouch
+
+![](multitouch.png "Multitouch") 
+
+[Chapters](../reveal.html) | 
+[File System](../20-CALayers/reveal.html)
+
+</script>
+</section> 
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

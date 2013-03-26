@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>RubyMotion Course</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+# Welcome to the RubyMotion course
+
+### This is a class that will prepare you for creating native iOS apps using Ruby
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+# Instructors
+
+* Laurent Sansonetti 
+  - e-mail: <lrz@hipbyte.com> 
+  - twitter: @lrz
+* Norberto Ortigoza 
+  - e-mail: <norberto.ortigoza@raku.mx>
+  - twitter: @hiphoox 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Daily Schedule at Class
+
+* Class Begins -- 9:00 AM
+* Lunch        -- 1:00 PM (1 Hour)
+* Class Ends   -- 5:30 PM
+
+
+* Friday Class Ends 	-- 3 PM
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## RubyMotion Course Goals
+
+Learn how to get the most out of iOS & Cocoa 
+
+* Objective-C conventions
+* Using C libraries
+* Platform Idioms
+* Key concepts: pointers, memory management, objects, messages
+* Fundamental iOS Libraries
+* Cocoa Patterns
+* Testing
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Class Requirements
+
+* iOS Apple Development Program (ADP)
+* iOS SDK (Xcode)
+* OSX 
+* RubyMotion License (we are going to give you one for the class)
+* Editor or IDE
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Editors & IDEs
+
+* Vim
+* Sublime
+* Emacs
+* Redcar
+* RubyMine
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Class Structure
+
+1. Lecture or Demonstration
+2. Exercise
+3. Challenges
+4. Review
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## RubyMotion Overview
+
+* Ruby dialect
+	- No eval
+	- No requiere
+	- No binding
+
+* Compiled
+* Automatic memory management
+* Direct access to C & Objective-C APIs
+* No bridge between Cocoa & Ruby
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+# Let's get started!
+
+[Chapters](../reveal.html) | 
+[iOS Overview](../01-iOSOverview/reveal.html)
+
+</script>
+</section> 
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

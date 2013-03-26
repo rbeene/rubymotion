@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>File System</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+## File System
+
+![](filesystem.png "File Sytem") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Application Sandbox
+
+![](sandbox.png "Sandbox") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Locating the Documents Directory
+
+    paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, # Which directory you want?
+             NSUserDomainMask, # Always NSUserDomainMask
+             true) # Always true
+    documentsDirectory = paths.objectAtIndex(0)
+
+    sandbox = NSHomeDirectory()
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## What do I write/read?
+
+iOS has methods to save string or binary data:
+
+<b>NSData</b>
+
+      writeToFile(path, atomically:flag
+
+      initWithContentsOfFile(path)
+
+<b>NSString</b>
+
+    writeToFile(path, atomically:useAuxiliaryFile, encoding:enc, error:error)
+
+    initWithContentsOfFile(path, encoding:enc, error:error)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Property Lists
+<b>NSData, NSString, NSDate, NSNumber, NSArray, NSDictionary</b> are all <i>property list serializable</i>. Can read/write populated <b>NSArray</b> or <b>NSDictionary</b> to disk and read them back in, as long as they only contain plist objects.
+
+    allGroups = NSMutableArray.array
+    workGroup = NSMutableDictionary.dictionary
+    allGroups.addObject(workGroup)
+    
+    bossContact = NSMutableDictionary.dictionary
+    bossContact.setObject('Laurent Sansonetti', forKey:'Name')
+    bossContact.setObject(5555555, forKey:'Number')
+    workGroup.setObject(bossContact, forKey:'Boss')
+    
+    allGroups.writeToFile('/path/to/doc/directory', atomically:true)
+
+    allGroups = NSMutableArray.alloc.initWithContentsOfFile('/path/to/doc/directory')
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Conforming to NSCoding
+
+    class RMItem
+      def encodeWithCoder(coder)
+        # possessionName and dateCreated must conform to NSCoding!
+        coder.encodeObject(itemName, forKey:'itemName')
+        coder.encodeObject(dateCreated, forKey:'dateCreated')
+
+        coder.encodeInteger(valueInDollars, forKey:'valueInDollars')
+      end
+
+      def initWithCoder(coder)
+        if (self = super.init)
+          itemName = coder.decodeObjectForKey('itemName')
+          dateCreated = coder.decodeObjectForKey('dateCreated')
+          valueInDollars = coder.decodeIntegerForKey('valueInDollars')
+        end
+        
+        self
+      end
+    end
+
+</lide>
+
+<section data-markdown>
+<script type="text/template">
+
+## NSKeyedArchiver and NSKeyedUnarchiver
+
+    singlePath = '/path/to/item'
+
+    success = NSKeyedArchiver archiveRootObject:anObject toFile:singlePath];
+    i = NSKeyedUnarchiver.unarchiveObjectWithFile(singlePath)
+        
+    array = NSArray.arrayWithObject(i)
+
+    success = NSKeyedArchiver.archiveRootObject(array, toFile:somePath)
+
+    arrayFromDisk = NSKeyedUnarchiver.unarchiveObjectWithFile(somePath)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## When to save
+
+    # iOS 4.0 and greater
+    def applicationDidEnterBackground(application)
+
+        RBItemStore.store.save
+
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## File System
+
+![](filesystem.png "Memory Warnings") 
+
+[Chapters](../reveal.html) | 
+[Multitouch](../19-Multitouch/reveal.html)
+
+
+</script>
+</section> 
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

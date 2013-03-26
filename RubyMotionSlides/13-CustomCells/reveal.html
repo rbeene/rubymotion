@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Custom Cells</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+## Custom Cells
+
+![](customcells.png "Custome Cells") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## UITableViewCell
+
+A UITableViewCell object includes properties and methods for managing cell selection, highlighted state, editing state and controls, accessory views, reordering controls, cell background, and content indentation. The class additionally includes properties for setting and managing cell content, specifically text and images.
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Cell Content
+
+    class CocoaheadsItemCell < UITableViewCell
+      attr_accessor valueLabel
+      attr_accessor nameLabel
+      attr_accessor imageView
+    end
+
+</script>
+</section> 
+    
+
+<section data-markdown>
+<script type="text/template">
+
+## Cell Hierarchy
+
+![](cellhierarchy.png "Cell Hierarchy") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Cell Layout
+
+![](celleditinglayout.png "Cell Layout") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Register NIB
+
+    def viewDidLoad
+      super
+      nib = UINib.nibWithNibName("CocoaHeadsItemCell", bundle:nil)
+      self.tableView.registerNib(nib, forCellReuseIdentifier:"CocoaHeadsItemCell")
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Dequeue
+
+    def tableView(tableView, cellForRowAtIndexPath:indexPath)
+      p = RMItemStore.defaultStore.allItems.objectAtIndex(indexPath.row)
+
+      cell = tableView.dequeueReusableCellWithIdentifier("CocoaHeadsItemCell")
+      cell.nameLabel.setText(p.itemName)
+      cell.serialNumberLabel.setText(p.serialNumber)
+      cellvalueLabel.setText("value: " + p.valueInDollars)
+      cell.thumbnailView.setImage(p.thumbnail)
+    
+      cell
+    end
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Image Content
+
+Create an offscreen image context.
+
+    UIGraphicsBeginImageContext(CGSizeMake(70, 70))
+    image.drawInRect(CGRectMake(0, 0, 70, 70))
+    thumbnail = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+
+</script>
+</section> 
+
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Custom Cells
+
+![](customcells.png "Custome Cells") 
+
+[Chapters](../reveal.html) | 
+[Navigation Controllers](../14-NavigationControllers/reveal.html)
+
+</script>
+</section> 
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>

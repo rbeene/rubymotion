@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>TableViews</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="../reveal.js/css/reveal.css">
+		<link rel="stylesheet" href="../reveal.js/css/theme/default.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="../reveal.js/lib/css/zenburn.css">
+
+		<!-- If the query includes 'print-pdf', use the PDF print sheet -->
+		<script>
+			document.write( '<link rel="stylesheet" href="../reveal.js/css/print/' + ( window.location.search.match( /print-pdf/gi ) ? 'pdf' : 'paper' ) + '.css" type="text/css" media="print">' );
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+				
+<section data-markdown>
+<script type="text/template">
+
+## TableViews
+
+![](tableview.png "TableViews") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## TableViews
+
+The UITableViewController is a controller object that manages a table view. It implements the following behavior:
+
++ When the table view is about to appear the first time it’s loaded, it reloads the table view’s data.
++ When the table view has appeared, the controller flashes the table view’s scroll indicators. 
++ It implements the superclass method setEditing:animated: so that if a user taps an Edit|Done button in the navigation bar, the controller toggles the edit mode of the table.
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## TableViews
+
+![](anatomy.png "TableViews") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Plain vs Grouped
+
+![](plainvsgrouped.png "TableViews") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Multiple Cells
+
+![](multiplecells.png "TableViews") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Datasources
+
+A special type of delegate. It is used by the TableView in order to get the information needed to display
+
++ # of Rows
++ # of Sections
++ Rows
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Creating an UITableViewController
+
+In the AppDelegate:
+
+    vc = MyTableViewController.alloc.initWithStyle(UITableViewStylePlain)
+    window.setRootViewController(vc)
+
+In your TableViewController subclass:
+
+    def loadView
+      tv = UITableView.alloc.initWithStyle(UITableViewStylePlain)
+      tv.setDataSource(self)
+      tv.setDelegate(self)
+      self.setView(tv)
+    end
+
+    def tableView(tableView, numberOfRowsInSection:section)
+
+    end
+
+    def tableView(tableView, cellForRowAtIndexPath:indexPath)
+
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Data Retrieve Methods
+
+    self.tableView.reloadData // When view first goes on screen        
+        
+    def tableView(tableView, numberOfRowsInSection:section)
+      bunchOfStrings.size
+    end
+
+    def tableView(tableView, cellForRowAtIndexPath:indexPath)
+      cell = UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:"UITableViewCell")
+
+      index = indexPath.row
+      someString = bunchOfStrings.objectAtIndex(index)
+      cell.textLabel.setText(someString)
+
+      cell
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Retrieve Process
+
+![](cellprocess.png "Cell Process") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Reuse of Cells
+
+    def tableView(tableView, cellForRowAtIndexPath:indexPath) 
+      cell = tableView.dequeueReusableCellWithIdentifier("UITableViewCell") 
+      if cell == nil
+        cell= UITableViewCell.alloc.initWithStyle(UITableViewCellStyleDefault, reuseIdentifier:"UITableViewCell")
+      end
+
+      cell.textLabel.setText(stringList.objectAtIndex(indexPath.row)) 
+        
+      cell 
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Cells Pool
+
+![](cellbank.png "Cell Pool") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## System Cell Types
+
+![](celltypes.png "Cell Types") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Editing UITableViews
+
+    # Call super's implementation, do any additional UI stuff
+    setEditing(flag, animated:animated)
+         
+    # Return YES if cell is editable
+    tableView(tableView, canEditRowAtIndexPath:indexPath)
+     
+    # Update data source
+    tableView(tableView, moveRowAtIndexPath:fromIndexPath, toIndexPath:toIndexPath)
+
+    # Update data source        
+    tableView(tableView, commitEditingStyle:editingStyle, forRowAtIndexPath:indexPath)
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Deleting, Moving and Inserting Rows
+
+    def tableView(tableView, moveRowAtIndexPath:fromIndexPath, toIndexPath:toIndexPath)
+      # Update our data source
+      obj = array.objectAtIndex(fromIndexPath.row)
+      array.removeObjectAtIndex(fromIndexPath.row)
+      array.insertObject(obj, atIndex:(toIndexPath.row))
+    end
+
+    def tableView(tableView, commitEditingStyle:editingStyle, forRowAtIndexPath:indexPath)
+      # Update our dataSource AND tableView
+      if (editingStyle == UITableViewCellEditingStyleDelete) 
+        array.removeObjectAtIndex(indexPath.row) 
+        tableView.deleteRowsAtIndexPaths(NSArray.arrayWithObject(indexPath), withRowAnimation:UITableViewRowAnimationFade) 
+      end
+    end
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Rubymotion Documentation
+
+![](documentation.png "Documentation") 
+
+</script>
+</section> 
+
+
+<section data-markdown>
+<script type="text/template">
+
+## Protocols Documentation
+
+![](UITableViewDataSource.png "UITableViewDataSource") 
+
+</script>
+</section> 
+
+    
+<section data-markdown>
+<script type="text/template">
+
+## TableViews
+
+![](tableview.png "TableViews") 
+
+[Chapters](../reveal.html) | 
+[Custom Cells](../13-CustomCells/reveal.html)
+
+</script>
+</section> 
+
+
+
+			</div>
+
+		</div>
+
+		<script src="../reveal.js/lib/js/head.min.js"></script>
+		<script src="../reveal.js/js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/none
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: '../reveal.js/lib/js/highlight.js', async: true, callback: function() { window.hljs.initHighlightingOnLoad(); } },
+					{ src: '../reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../reveal.js/lib/js/showdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/lib/js/data-markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: '../reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: '../reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+		</script>
+
+	</body>
+</html>
